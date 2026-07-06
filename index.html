@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>សម្រាប់អូន ❤️</title>
+<title>💖 សម្រាប់អូន 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -34,31 +34,46 @@ body{
 
 .card{
     width:380px;
-    padding:35px;
+    padding:30px;
     background:rgba(255,255,255,.18);
     backdrop-filter:blur(15px);
     border-radius:25px;
     text-align:center;
     color:white;
     box-shadow:0 20px 40px rgba(0,0,0,.2);
+    animation:floatCard 3s ease-in-out infinite;
+    position:relative;
+    z-index:10;
+}
+
+@keyframes floatCard{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+    100%{transform:translateY(0);}
 }
 
 h1{
-    font-size:30px;
+    font-size:28px;
     margin-bottom:15px;
+    animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{text-shadow:0 0 10px white;}
+    to{text-shadow:0 0 25px #ffb6d5;}
 }
 
 p{
-    font-size:18px;
+    font-size:16px;
     line-height:1.8;
 }
 
 button{
-    margin-top:25px;
-    padding:13px 28px;
+    margin-top:20px;
+    padding:12px 24px;
     border:none;
     border-radius:40px;
-    font-size:18px;
+    font-size:16px;
     cursor:pointer;
     transition:.3s;
 }
@@ -70,18 +85,20 @@ button{
 }
 
 #yes:hover{
-    transform:scale(1.08);
+    transform:scale(1.1);
+    box-shadow:0 0 20px white;
 }
 
 #no{
     background:#ffffff55;
     color:white;
+    position:relative;
 }
 
 #msg{
-    margin-top:25px;
-    font-size:20px;
-    min-height:90px;
+    margin-top:20px;
+    font-size:18px;
+    min-height:80px;
     transition:.5s;
 }
 
@@ -92,32 +109,34 @@ button{
 }
 
 @keyframes float{
-    from{
-        transform:translateY(100vh) scale(.5);
-        opacity:1;
-    }
-    to{
-        transform:translateY(-100px) scale(1.5);
-        opacity:0;
-    }
+    from{transform:translateY(100vh) scale(.5);opacity:1;}
+    to{transform:translateY(-100px) scale(1.5);opacity:0;}
+}
+
+.actions{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
 }
 </style>
-
 </head>
+
 <body>
 
-<div class="card">
+<div class="card" id="card">
 
-<h1>❤️ សម្រាប់អូន ❤️</h1>
+<h1>💖 សម្រាប់អូន 💖</h1>
 
-<p>
-អូនដឹងទេ...<br><br>
-រាល់ថ្ងៃដែលបងបាននិយាយជាមួយអូន<br>
-គឺជាថ្ងៃដែលបងមានស្នាមញញឹម។ 😊
+<p id="text">
+អូន... ❤️<br>
+បងមានអ្វីមួយចង់ប្រាប់អូន... 😊
 </p>
 
-<button id="yes" onclick="love()">ប៉ះទីនេះ 💖</button>
-<button id="no" onmouseover="moveNo()">🙈</button>
+<div class="actions">
+<button id="yes" onclick="yesLove()">💖 Yes</button>
+<button id="no" onclick="moveNo()">🙈 Not Yet</button>
+</div>
 
 <div id="msg"></div>
 
@@ -125,55 +144,62 @@ button{
 
 <script>
 
-const texts=[
-"🌸 អូនគួរឲ្យស្រលាញ់ខ្លាំងណាស់។",
-"😊 ពេលអូនញញឹម បេះដូងបងញញឹមតាម។",
-"❤️ បងតែងតែរីករាយពេលឃើញសារពីអូន។",
-"🥺 បងមិនដឹងអនាគតនឹងទៅជាយ៉ាងណាទេ...",
-"💖 តែបងចង់ឲ្យអូនដឹងថា...",
-"❤️ បងស្រលាញ់អូន ដោយស្មោះ។"
+const messages = [
+"🌸 អូនធ្វើឲ្យបងញញឹមរាល់ថ្ងៃ",
+"🥺 បងចូលចិត្តពេលអូននៅក្បែរ",
+"💖 បងលួចនឹកអូនច្រើនណាស់",
+"❤️ អូនពិសេសសម្រាប់បង",
+"💌 បងមានអ្វីចង់សួរអូន..."
 ];
 
-let i=0;
+let i = 0;
 
-function love(){
-
-    if(i<texts.length){
-        document.getElementById("msg").innerHTML=texts[i];
+function typeMessage(){
+    if(i < messages.length){
+        document.getElementById("msg").innerHTML = messages[i];
         i++;
     }else{
-        document.getElementById("msg").innerHTML=
-        "🥹 អរគុណដែលចុចរហូតដល់ចប់។ អូនជាមនុស្សពិសេសសម្រាប់បង។ ❤️";
+        document.getElementById("msg").innerHTML =
+        "💍 អូនចង់ធ្វើជាមិត្តស្រីរបស់បងទេ?";
     }
+}
 
+setInterval(typeMessage, 2500);
+
+function yesLove(){
+    document.body.style.background =
+    "linear-gradient(45deg,#ff4f81,#ff99cc,#ffd1dc)";
+
+    document.getElementById("card").innerHTML = `
+        <h1>💖 Yesss!! 💖</h1>
+        <p>
+        🥹 អរគុណអូនណាស់...<br><br>
+        ចាប់ពីថ្ងៃនេះ បងសន្យាថានឹងថែអូន ធ្វើឲ្យអូនញញឹម<br>
+        និងស្រឡាញ់អូនជារៀងរហូត ❤️🌹
+        </p>
+    `;
 }
 
 function moveNo(){
+    const btn = document.getElementById("no");
 
-const btn=document.getElementById("no");
-
-btn.style.position="absolute";
-btn.style.left=Math.random()*(window.innerWidth-100)+"px";
-btn.style.top=Math.random()*(window.innerHeight-60)+"px";
-
+    // playful move but still clickable
+    btn.style.position = "absolute";
+    btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    btn.style.top = Math.random() * (window.innerHeight - 80) + "px";
 }
 
+// floating hearts
 setInterval(()=>{
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = ["❤️","💕","💖","💗"][Math.floor(Math.random()*4)];
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (20 + Math.random()*20) + "px";
 
-const heart=document.createElement("div");
+    document.body.appendChild(heart);
 
-heart.className="heart";
-heart.innerHTML=["❤️","💕","💖","💗"][Math.floor(Math.random()*4)];
-
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(20+Math.random()*20)+"px";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},6000);
-
+    setTimeout(()=> heart.remove(), 6000);
 },300);
 
 </script>
